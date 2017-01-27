@@ -20,8 +20,12 @@ iptables -A INPUT -p icmp --icmp-type 0 -s 0/0 -m state --state ESTABLISHED,RELA
  
 # Allow incoming only on
 iptables -A INPUT -p tcp --dport 22 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 80 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 443 -j ACCEPT
-iptables -A INPUT -p tcp -m tcp --dport 5938 -j ACCEPT
+iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+iptables -A INPUT -p tcp --dport 5938 -j ACCEPT
+
+# DROP everything and Log it
+iptables -A INPUT -j LOG
+iptables -A INPUT -j DROP
 
 iptables-save > /etc/iptables/iptables.rules
